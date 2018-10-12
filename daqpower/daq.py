@@ -145,6 +145,7 @@ class ReadSamplesCallbackTask(ReadSamplesBaseTask):
         self.ReadAnalogF64(DAQmx_Val_Auto, 0.0, DAQmx_Val_GroupByScanNumber, samples_buffer,
                            self.sample_buffer_size, byref(self.samples_read), None)
         self.consumer.write((samples_buffer, self.samples_read.value))
+        del samples_buffer
 
     def DoneCallback(self, status):  # pylint: disable=W0613,R0201
         return 0  # The function should return an integer
