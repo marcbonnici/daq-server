@@ -355,9 +355,9 @@ class DaqFactory(Factory):
         return proto
 
     def clientConnectionLost(self, connector, reason):
-        log.msg('client connection lost: {}.'.format(reason))
+        log.info('client connection lost: {}.'.format(reason))
         if not isinstance(reason, ConnectionLost):
-            log.msg('ERROR: Client terminated connection mid-transfer.')
+            log.info('ERROR: Client terminated connection mid-transfer.')
             for session in self.transfer_sessions:
                 self.transferComplete(session)
 
@@ -386,7 +386,7 @@ class DaqFactory(Factory):
         Cleanup and old uncollected data files to recover disk space.
 
         """
-        log.msg('Performing cleanup of the output directory...')
+        log.info('Performing cleanup of the output directory...')
         base_directory = self.server.base_output_directory
         current_time = datetime.now()
         for entry in os.listdir(base_directory):
@@ -398,7 +398,7 @@ class DaqFactory(Factory):
                 shutil.rmtree(entry_path)
             else:
                 log.debug('Keeping {} (existed for {})'.format(entry, existence_time))
-        log.msg('Cleanup complete.')
+        log.info('Cleanup complete.')
 
     def __str__(self):
         return '<DAQ {}>'.format(self.server)
